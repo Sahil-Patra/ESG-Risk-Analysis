@@ -11,8 +11,8 @@ To identify ESG risk patterns across sectors, company sizes, and governance prac
   -- Governance and ESG Risk Correlation
 - [Tools Used](#tools-used)
 - [Data Source](#data-source)
-- [SQL Queries]
-- [Python Analysis] 
+- [SQL Queries](#SQL-Queries)
+- [Python Analysis](#Python-Analysis) 
 - [Power BI Dashboard](#Power-BI-Dashboard)
 - [key Insights](#Key-Insights)
 - [Contact](#contact)
@@ -215,6 +215,7 @@ styled_stats = (
 
 styled_stats
 ```
+ ![Visual](assets/Screenshots/Summary.png)
 
 ```python
 
@@ -238,9 +239,6 @@ def check_dataframe(df):
     )
     
     return result_df
-```
-
-```python
 
 # Remove rows with nulls in 'Sector' and 'Total ESG Risk score'
 df_cleaned = df.dropna(subset=['Sector', 'Total ESG Risk score']).reset_index(drop=True)
@@ -258,6 +256,7 @@ styled_summary = (
 
 styled_summary
 ```
+![Visual](assets/Screenshots/Null.png)
 
 ```python
 
@@ -291,68 +290,6 @@ for i, col in enumerate(esg_cols):
 
 plt.tight_layout()
 plt.show()
-```
-
-Outliers in Total ESG Risk score:
-+-----+----------------------+------------------------+-----------------------+-------------------+
-|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-| 166 |         41.7         |          25.0          |          7.0          |        9.7        |
-| 297 |         40.5         |          14.2          |         10.9          |       15.4        |
-| 324 |         41.6         |          23.1          |          8.5          |       10.0        |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-
-Outliers in Environment Risk Score:
-+-----+----------------------+------------------------+-----------------------+-------------------+
-|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-| 41  |         32.6         |          20.1          |          5.0          |        7.4        |
-| 146 |         35.4         |          20.8          |          5.8          |        8.8        |
-| 166 |         41.7         |          25.0          |          7.0          |        9.7        |
-| 219 |         37.7         |          21.1          |          7.6          |        9.1        |
-| 324 |         41.6         |          23.1          |          8.5          |       10.0        |
-| 339 |         34.2         |          20.2          |          7.3          |        6.7        |
-| 372 |         36.1         |          20.3          |          7.5          |        8.3        |
-| 465 |         38.8         |          22.0          |          8.0          |        8.9        |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-
-Outliers in Governance Risk Score:
-+-----+----------------------+------------------------+-----------------------+-------------------+
-|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-| 20  |         36.2         |          2.0           |         19.4          |       14.8        |
-| 29  |         21.8         |          2.0           |         11.9          |        7.9        |
-| 51  |         30.3         |          1.8           |         13.0          |       15.5        |
-| 75  |         23.3         |          2.4           |         11.9          |        8.9        |
-| 126 |         27.0         |          2.3           |         13.4          |       11.2        |
-| 147 |         28.5         |          3.4           |         11.5          |       13.5        |
-| 220 |         26.5         |          2.6           |         13.6          |       10.3        |
-| 224 |         16.4         |          0.6           |         11.5          |        4.3        |
-| 246 |         29.3         |          1.1           |         11.7          |       16.5        |
-| 290 |         25.5         |          0.9           |         11.8          |       12.8        |
-| 384 |         25.2         |          2.5           |         11.7          |       11.0        |
-| 392 |         23.5         |          2.0           |         11.4          |       10.1        |
-| 393 |         29.2         |          1.8           |         13.7          |       13.8        |
-| 396 |         25.6         |          1.8           |         12.9          |       11.0        |
-| 435 |         23.4         |          2.5           |         11.3          |        9.6        |
-| 441 |         20.7         |          1.0           |         14.8          |        4.9        |
-| 446 |         28.3         |          1.7           |         11.5          |       15.1        |
-| 457 |         24.1         |          1.6           |         11.7          |       10.8        |
-| 475 |         24.2         |          1.6           |         12.9          |        9.7        |
-| 484 |         24.2         |          1.6           |         11.5          |       11.2        |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-
-Outliers in Social Risk Score:
-+-----+----------------------+------------------------+-----------------------+-------------------+
-|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-| 42  |         33.0         |          3.7           |          8.6          |       20.7        |
-| 205 |         34.1         |          2.7           |         10.3          |       21.1        |
-| 298 |         35.2         |          9.4           |          6.9          |       18.9        |
-| 434 |         39.6         |          8.8           |          8.3          |       22.5        |
-+-----+----------------------+------------------------+-----------------------+-------------------+
-
-```python
 
 # Combined KDE plot
 plt.figure(figsize=(13.6, 6))
@@ -365,9 +302,7 @@ plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
 plt.show()
-```
 
-```python
 
 # Outlier Detection using IQR
 outliers = {}
@@ -388,6 +323,65 @@ for col, df_out in outliers.items():
     else:
         print(tabulate(df_out, headers='keys', tablefmt='pretty'))
 ```
+![Visual](assets/Screenshots/Plot_1.png)
+![Visual](assets/Screenshots/Plot_2.png)
+
+Outliers in Total ESG Risk score:
+
+|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
+|-----|----------------------|------------------------|-----------------------|-------------------|
+| 166 |         41.7         |          25.0          |          7.0          |        9.7        |
+| 297 |         40.5         |          14.2          |         10.9          |       15.4        |
+| 324 |         41.6         |          23.1          |          8.5          |       10.0        |
+
+
+Outliers in Environment Risk Score:
+
+|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
+|-----|----------------------|------------------------|-----------------------|-------------------|
+| 41  |         32.6         |          20.1          |          5.0          |        7.4        |
+| 146 |         35.4         |          20.8          |          5.8          |        8.8        |
+| 166 |         41.7         |          25.0          |          7.0          |        9.7        |
+| 219 |         37.7         |          21.1          |          7.6          |        9.1        |
+| 324 |         41.6         |          23.1          |          8.5          |       10.0        |
+| 339 |         34.2         |          20.2          |          7.3          |        6.7        |
+| 372 |         36.1         |          20.3          |          7.5          |        8.3        |
+| 465 |         38.8         |          22.0          |          8.0          |        8.9        |
+
+
+Outliers in Governance Risk Score:
+
+|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
+|-----|----------------------|------------------------|-----------------------|-------------------|
+| 20  |         36.2         |          2.0           |         19.4          |       14.8        |
+| 29  |         21.8         |          2.0           |         11.9          |        7.9        |
+| 51  |         30.3         |          1.8           |         13.0          |       15.5        |
+| 75  |         23.3         |          2.4           |         11.9          |        8.9        |
+| 126 |         27.0         |          2.3           |         13.4          |       11.2        |
+| 147 |         28.5         |          3.4           |         11.5          |       13.5        |
+| 220 |         26.5         |          2.6           |         13.6          |       10.3        |
+| 224 |         16.4         |          0.6           |         11.5          |        4.3        |
+| 246 |         29.3         |          1.1           |         11.7          |       16.5        |
+| 290 |         25.5         |          0.9           |         11.8          |       12.8        |
+| 384 |         25.2         |          2.5           |         11.7          |       11.0        |
+| 392 |         23.5         |          2.0           |         11.4          |       10.1        |
+| 393 |         29.2         |          1.8           |         13.7          |       13.8        |
+| 396 |         25.6         |          1.8           |         12.9          |       11.0        |
+| 435 |         23.4         |          2.5           |         11.3          |        9.6        |
+| 441 |         20.7         |          1.0           |         14.8          |        4.9        |
+| 446 |         28.3         |          1.7           |         11.5          |       15.1        |
+| 457 |         24.1         |          1.6           |         11.7          |       10.8        |
+| 475 |         24.2         |          1.6           |         12.9          |        9.7        |
+| 484 |         24.2         |          1.6           |         11.5          |       11.2        |
+
+Outliers in Social Risk Score:
+
+|     | Total ESG Risk score | Environment Risk Score | Governance Risk Score | Social Risk Score |
+|-----|----------------------|------------------------|-----------------------|-------------------|
+| 42  |         33.0         |          3.7           |          8.6          |       20.7        |
+| 205 |         34.1         |          2.7           |         10.3          |       21.1        |
+| 298 |         35.2         |          9.4           |          6.9          |       18.9        |
+| 434 |         39.6         |          8.8           |          8.3          |       22.5        |
 
 ```python
 
@@ -411,11 +405,14 @@ data_no_outliers.reset_index(drop=True, inplace=True)
 # Display the shape of the new dataset without outliers
 print(f"Shape of the dataset without outliers: {data_no_outliers.shape}")
 ```
+Shape of the dataset without outliers: (397, 15)
+
 ```python
 sns.countplot(data=df, x='ESG Risk Level', order=df['ESG Risk Level'].value_counts().index)
 plt.title("Distribution of ESG Risk Levels")
 plt.show()
 ```
+![Visual](assets/Screenshots/Risk_Level.png)
 
 ```python
 
@@ -457,6 +454,7 @@ for bar in bars:
 plt.tight_layout()
 plt.show()
 ```
+![Visual](assets/Screenshots/TESG_SCORE.png)
 
 ```python
 
@@ -477,6 +475,7 @@ fig.update_layout(showlegend=False)
 # Show the plot
 fig.show()
 ```
+![Visual](assets/Screenshots/Frequency.png)
 
 ```python
 # Calculate sector-wise average ESG scores
@@ -551,6 +550,9 @@ plt.title("Average  Total ESG Risk Score by Sector")
 plt.tight_layout()
 plt.show()
 ```
+![Visual](assets/Screenshots/newplot.png)
+![Visual](assets/Screenshots/ajlsgasdh.png)
+![Visual](assets/Screenshots/Sector_Wise.png)
 
 ```python
 
@@ -620,6 +622,9 @@ fig_soc.update_traces(texttemplate='%{text:.2f}', textposition='outside')
 fig_soc.update_layout(xaxis_title='Average Score', yaxis_title='Industry')
 fig_soc.show()
 ```
+![Visual](assets/Screenshots/kgfkucyg.png)
+![Visual](assets/Screenshots/zklsjb.png)
+![Visual](assets/Screenshots/slihdf.png)
 
 ```python
 plt.figure(figsize=(12, 8))
@@ -637,6 +642,7 @@ plt.tight_layout()
 plt.show()
 
 ```
+![Visual](assets/Screenshots/Correlation.png)
 
 ```python
 plt.figure(figsize=(10,6))
@@ -645,15 +651,24 @@ sns.regplot(data=df, x='Governance Risk Score', y='Total ESG Risk score', scatte
 plt.title("Governance Score vs Total ESG Risk")
 plt.show()
 ```
+![Visual](assets/Screenshots/Last.png)
 
 
 ## Power BI
-  **Overview Page**: The initial dashboard page is intentionally designed to be straightforward, featuring three crucial Key Performance Indicators (KPIs) and a concise narrative that encapsulates the entire report.
-  ![Overview-page](assets/images/Overview_page.png)
+  **Overview Page**: The initial dashboard page is intentionally designed to be straightforward, shows the summary of ESG risk scores for different industries and companies. Shows key numbers and overall risk levels.
+  ![Overview-page](assets/Screenshots/Overview.png)
 
+  **Environment Risk Page**:
+  
+  ![Overview-page](assets/Screenshots/Environment.png)
 
+  **Social Risk Page**:
+   
+  ![Overview-page](assets/Screenshots/Social.png)
 
-
+  **Governance Page**:
+    
+  ![Overview-page](assets/Screenshots/Governance.png)
 
 ## Key Insights
 
