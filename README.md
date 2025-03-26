@@ -85,7 +85,7 @@ SET Total_ESG_Risk_score = NULLIF(LTRIM(RTRIM(REPLACE(Total_ESG_Risk_score, ',',
 ALTER TABLE SP_500_ESG_Risk_Ratings
 ALTER COLUMN Total_ESG_Risk_score FLOAT;
 ```
-** Industries with average ESG components Score**
+**Industries with average ESG components Score**
 ```SQL
 SELECT
     Industry,
@@ -713,7 +713,7 @@ plt.show()
     
   ![Governance-page](assets/Screenshots/Governance.png)
 
-  ![ESG-Risk-Analysis-Dashboard](https://app.powerbi.com/view?r=eyJrIjoiM2Y0MGVlM2ItNDJiZS00ZjViLWI3MzUtY2I2M2Q0YWNhMjljIiwidCI6ImRiOThlOTIzLWQyZWEtNDY2MS1hZDE1LTI3YzUyNjA2MGEyYiJ9)
+ ** Dashboard:** [ESG-Risk-Analysis-Dashboard](https://app.powerbi.com/view?r=eyJrIjoiM2Y0MGVlM2ItNDJiZS00ZjViLWI3MzUtY2I2M2Q0YWNhMjljIiwidCI6ImRiOThlOTIzLWQyZWEtNDY2MS1hZDE1LTI3YzUyNjA2MGEyYiJ9)
 
 ## Key Insights
 - Both Occidental Petroleum Corporation and Exxon Mobile Corporation companies have equal and high Total ESG Risk Score. They also come under as top 2 comapnies with High Environment Risk Score.
