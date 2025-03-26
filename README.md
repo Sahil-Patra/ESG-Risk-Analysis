@@ -5,10 +5,6 @@ To identify ESG risk patterns across sectors, company sizes, and governance prac
 ## Table of Contents
 - [About the Project](#about-the-project)
 - [Objectives](#Objectives)
-  -- Industry-Wide ESG Risk Benchmarking
-  -- Identifying High-Risk Companies and Controversies
-  -- Relationship Between ESG Risk and Company Size
-  -- Governance and ESG Risk Correlation
 - [Tools Used](#tools-used)
 - [Data Source](#data-source)
 - [SQL Queries](#SQL-Queries)
@@ -54,12 +50,14 @@ This project uses sample data that simulates typical ESG data:
 
 
 ## SQL Queries
-```SQL
 
+**Column names and their data types**
+```SQL
 SELECT COLUMN_NAME, DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'SP_500_ESG_Risk_Ratings'; 
 ```
+**Cleaning and Changing types of ESG components columns**
 ```SQL
 UPDATE SP_500_ESG_Risk_Ratings
 SET Environment_Risk_Score = NULLIF(LTRIM(RTRIM(REPLACE(Environment_Risk_Score, ',', ''))), '');;
@@ -87,7 +85,7 @@ SET Total_ESG_Risk_score = NULLIF(LTRIM(RTRIM(REPLACE(Total_ESG_Risk_score, ',',
 ALTER TABLE SP_500_ESG_Risk_Ratings
 ALTER COLUMN Total_ESG_Risk_score FLOAT;
 ```
-
+** Industries with average ESG components Score**
 ```SQL
 SELECT
     Industry,
@@ -99,6 +97,21 @@ WHERE Industry is not null
 GROUP BY Industry
 ORDER BY Industry;
 ```
+![Visual](assets/Screenshots/Indus_ESG_comp.png)
+**Top 10 Industry by average Environment Risk Score**
+```SQL
+SELECT TOP 10
+    Industry,
+    AVG([Environment_Risk_Score]) AS Avg_Environment_Risk_Score
+FROM
+    SP_500_ESG_Risk_Ratings
+GROUP BY
+    Industry
+ORDER BY
+    Avg_Environment_Risk_Score DESC;
+```
+![Visual](assets/Screenshots/T10_E.png)
+**Top 10 Industry by average Governance Risk Score**
 ```SQL
 SELECT TOP 10
     Industry,
@@ -110,6 +123,8 @@ GROUP BY
 ORDER BY
     Avg_Governance_Risk_Score DESC;
 ```
+![Visual](assets/Screenshots/T10_G.png)
+**Top 10 Industry by average Social Risk Score**
 ```SQL
 SELECT TOP 10
     Industry,
@@ -121,6 +136,8 @@ GROUP BY
 ORDER BY
     Avg_Social_Risk_Score DESC;
 ```
+![Visual](assets/Screenshots/T10_S.png)
+**Sector-wise average ESG components **
 ```SQL
 SELECT
     Sector,
@@ -135,6 +152,8 @@ GROUP BY
 ORDER BY
     Sector;
 ```
+![Visual](assets/Screenshots/Sec_ESG_comp.png)
+**Risk Level-wise Average Total ESG Score**
 ```SQL
 SELECT
     [ESG_Risk_Level],
@@ -153,6 +172,8 @@ ORDER BY
         ELSE 5
     END;
 ```
+![Visual](assets/Screenshots/Risk_lev_AVG_ESG.png)
+**Frequency Count of Sector**
 ```SQL
 SELECT
     Sector,
@@ -164,24 +185,26 @@ GROUP BY
 ORDER BY
     Frequency DESC;
 ```
+![Visual](assets/Screenshots/Freq_SEc.png)
+** Correlation-like Check between Governance and Total ESG Risk (Not true correlation but a comparative trend)**
 ```SQL
-
---  Correlation-like Check between Governance and Total ESG Risk (Not true correlation but a comparative trend)
 SELECT ROUND(AVG(Governance_Risk_Score), 2) AS Avg_Governance,
        ROUND(AVG(Total_ESG_Risk_Score), 2) AS Avg_Total_ESG
 FROM SP_500_ESG_Risk_Ratings;
 ```
+![Visual](assets/Screenshots/GR_TS.png)
+ **Count of Companies per ESG Risk Level**
 ```SQL
---  Count of Companies per ESG Risk Level
 SELECT [ESG_Risk_Level], COUNT(*) AS Company_Count
 FROM SP_500_ESG_Risk_Ratings
 WHERE ESG_Risk_Level is not null
 GROUP BY [ESG_Risk_Level]
 ORDER BY Company_Count DESC;
 ```
+![Visual](assets/Screenshots/Com_Risk_lev.png)
 
 ## Python Analysis
-
+Importing all the necessary library
 ```python
 import pandas as pd
 import numpy as np
@@ -195,10 +218,12 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
+Importing the CSV data
 ```python
 df = pd.read_csv('SP 500 ESG Risk Ratings.csv')
 ```
 
+Creating a Summary Statistics Overview Table
 ```python
 summary_stats = df.describe().drop("count")
 
@@ -217,6 +242,7 @@ styled_stats
 ```
  ![Visual](assets/Screenshots/Summary.png)
 
+**Creating a Data Overview Summary Table**
 ```python
 
 def check_dataframe(df):
@@ -258,6 +284,7 @@ styled_summary
 ```
 ![Visual](assets/Screenshots/Null.png)
 
+**Creating visuals of Distribution of all ESG scores and Table of outliers in ESG scores**
 ```python
 
 esg_cols = ['Total ESG Risk score', 'Environment Risk Score', 'Governance Risk Score', 'Social Risk Score']
@@ -383,6 +410,7 @@ Outliers in Social Risk Score:
 | 298 |         35.2         |          9.4           |          6.9          |       18.9        |
 | 434 |         39.6         |          8.8           |          8.3          |       22.5        |
 
+**Calculating the shape of the data with no outliers**
 ```python
 
 data_no_outliers = df.copy()
@@ -407,6 +435,7 @@ print(f"Shape of the dataset without outliers: {data_no_outliers.shape}")
 ```
 Shape of the dataset without outliers: (397, 15)
 
+**Creating a visual of Distribution of ESG Risk Levels**
 ```python
 sns.countplot(data=df, x='ESG Risk Level', order=df['ESG Risk Level'].value_counts().index)
 plt.title("Distribution of ESG Risk Levels")
@@ -414,6 +443,7 @@ plt.show()
 ```
 ![Visual](assets/Screenshots/Risk_Level.png)
 
+ **Creating a visual of Average Total ESG Score of each  ESG Risk level**
 ```python
 
 risk_levels = ['Negligible', 'Low', 'Medium', 'High']
@@ -456,6 +486,7 @@ plt.show()
 ```
 ![Visual](assets/Screenshots/TESG_SCORE.png)
 
+** Creating a visual of Frequency count of each Secto**r
 ```python
 
 sector_counts = df['Sector'].value_counts().reset_index()
@@ -477,6 +508,7 @@ fig.show()
 ```
 ![Visual](assets/Screenshots/Frequency.png)
 
+**Creating visuals of Sector-wise and Industry-wise average Environment, Social, Governance Risk score and Sector-wise Total ESG score**
 ```python
 # Calculate sector-wise average ESG scores
 sector_avg_scores = df.groupby('Sector')[['Environment Risk Score', 'Governance Risk Score', 'Social Risk Score']].mean().reset_index()
@@ -554,6 +586,7 @@ plt.show()
 ![Visual](assets/Screenshots/ajlsgasdh.png)
 ![Visual](assets/Screenshots/Sector_Wise.png)
 
+**Creating visuals of top 10 Industry by each ESG components having high risk scores**
 ```python
 
 # Calculate industry-wise average ESG scores
@@ -626,6 +659,7 @@ fig_soc.show()
 ![Visual](assets/Screenshots/zklsjb.png)
 ![Visual](assets/Screenshots/slihdf.png)
 
+**Creating a correlation heatmap of ESG components**
 ```python
 plt.figure(figsize=(12, 8))
 sns.set_style("dark")
@@ -644,6 +678,7 @@ plt.show()
 ```
 ![Visual](assets/Screenshots/Correlation.png)
 
+**Creating a visual to check the relation of Governance risk score with Total ESG risk score**
 ```python
 plt.figure(figsize=(10,6))
 sns.scatterplot(data=df, x='Governance Risk Score', y='Total ESG Risk score')
@@ -654,29 +689,35 @@ plt.show()
 ![Visual](assets/Screenshots/Last.png)
 
 
-## Power BI
-  **Overview Page**: The initial dashboard page is intentionally designed to be straightforward, shows the summary of ESG risk scores for different industries and companies. Shows key numbers and overall risk levels.
+## Power BI Dashboard
+  **Overview Page**:  
   ![Overview-page](assets/Screenshots/Overview.png)
 
   **Environment Risk Page**:
   
-  ![Overview-page](assets/Screenshots/Environment.png)
+  ![Environment-page](assets/Screenshots/Environment.png)
 
   **Social Risk Page**:
    
-  ![Overview-page](assets/Screenshots/Social.png)
+  ![Social-page](assets/Screenshots/Social.png)
 
   **Governance Page**:
     
-  ![Overview-page](assets/Screenshots/Governance.png)
+  ![Governance-page](assets/Screenshots/Governance.png)
+
+  ![ESG-Risk-Analysis-Dashboard](https://app.powerbi.com/view?r=eyJrIjoiM2Y0MGVlM2ItNDJiZS00ZjViLWI3MzUtY2I2M2Q0YWNhMjljIiwidCI6ImRiOThlOTIzLWQyZWEtNDY2MS1hZDE1LTI3YzUyNjA2MGEyYiJ9)
 
 ## Key Insights
-
+- Both Occidental Petroleum Corporation and Exxon Mobile Corporation companies have equal and high Total ESG Risk Score. They also come under as top 2 comapnies with High Environment Risk Score.
+- Environment risk has the highest correlation with Total ESG score.
+- Energy and Materials sectors are the most ESG-risk-prone
+- Big Companies (with >15,000 employees) tend to have higher governance and Social risks but have a lower Environment Risk.
+- Controversy level strongly influences overall ESG risk perception.
 
 
 ## Contact
 **Sahil Patra**  
-GitHub: [Sahil-Patra](https://github.com/Sahil-Patra)  
+GitHub: [Github-page](https://github.com/Sahil-Patra)  
 Email: sahilpatra1004@gmail.com
 Ph no.: +91 7735367833
 ---
