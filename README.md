@@ -98,6 +98,7 @@ GROUP BY Industry
 ORDER BY Industry;
 ```
 ![Visual](assets/Screenshots/Indus_ESG_comp.png)
+
 **Top 10 Industry by average Environment Risk Score**
 ```SQL
 SELECT TOP 10
@@ -111,6 +112,7 @@ ORDER BY
     Avg_Environment_Risk_Score DESC;
 ```
 ![Visual](assets/Screenshots/T10_E.png)
+
 **Top 10 Industry by average Governance Risk Score**
 ```SQL
 SELECT TOP 10
@@ -124,6 +126,7 @@ ORDER BY
     Avg_Governance_Risk_Score DESC;
 ```
 ![Visual](assets/Screenshots/T10_G.png)
+
 **Top 10 Industry by average Social Risk Score**
 ```SQL
 SELECT TOP 10
@@ -137,7 +140,8 @@ ORDER BY
     Avg_Social_Risk_Score DESC;
 ```
 ![Visual](assets/Screenshots/T10_S.png)
-**Sector-wise average ESG components **
+
+**Sector-wise average ESG components**
 ```SQL
 SELECT
     Sector,
@@ -153,6 +157,7 @@ ORDER BY
     Sector;
 ```
 ![Visual](assets/Screenshots/Sec_ESG_comp.png)
+
 **Risk Level-wise Average Total ESG Score**
 ```SQL
 SELECT
@@ -173,6 +178,7 @@ ORDER BY
     END;
 ```
 ![Visual](assets/Screenshots/Risk_lev_AVG_ESG.png)
+
 **Frequency Count of Sector**
 ```SQL
 SELECT
@@ -186,13 +192,15 @@ ORDER BY
     Frequency DESC;
 ```
 ![Visual](assets/Screenshots/Freq_SEc.png)
-** Correlation-like Check between Governance and Total ESG Risk (Not true correlation but a comparative trend)**
+
+**Correlation-like Check between Governance and Total ESG Risk (Not true correlation but a comparative trend)**
 ```SQL
 SELECT ROUND(AVG(Governance_Risk_Score), 2) AS Avg_Governance,
        ROUND(AVG(Total_ESG_Risk_Score), 2) AS Avg_Total_ESG
 FROM SP_500_ESG_Risk_Ratings;
 ```
 ![Visual](assets/Screenshots/GR_TS.png)
+
  **Count of Companies per ESG Risk Level**
 ```SQL
 SELECT [ESG_Risk_Level], COUNT(*) AS Company_Count
@@ -486,7 +494,7 @@ plt.show()
 ```
 ![Visual](assets/Screenshots/TESG_SCORE.png)
 
-** Creating a visual of Frequency count of each Secto**r
+**Creating a visual of Frequency count of each Sector**
 ```python
 
 sector_counts = df['Sector'].value_counts().reset_index()
