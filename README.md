@@ -3,10 +3,10 @@
 To identify ESG risk patterns across sectors, company sizes, and governance practices using Python-based data analysis and visualization, delivering insights that could support sustainable investing decisions and risk mitigation strategies.
 
 ## Table of Contents
-- [About the Project](#about-the-project)
+- [About the Project](#About-the-Project)
 - [Objectives](#Objectives)
-- [Tools Used](#tools-used)
-- [Data Source](#data-source)
+- [Tools Used](#Tools-Used)
+- [Data Source](#Data-Source)
 - [SQL Queries](#SQL-Queries)
 - [Python Analysis](#Python-Analysis) 
 - [Power BI Dashboard](#Power-BI-Dashboard)
