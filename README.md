@@ -92,11 +92,6 @@ SELECT COLUMN_NAME, DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'SP_500_ESG_Risk_Ratings'; 
 ```
-**Column Name and Their Datatypes**
-
-SELECT COLUMN_NAME, DATA_TYPE
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = 'SP_500_ESG_Risk_Ratings'; 
 
 **Cleaning and changing the datatypes of columns**
 ```SQL
