@@ -38,26 +38,6 @@ SET Controversy_Score = Coalesce(Controversy_Score, '0');
 ALTER TABLE SP_500_ESG_Risk_Ratings
 ALTER COLUMN Controversy_Score Integer;
 
-UPDATE SP_500_ESG_Risk_Ratings
-SET Environment_Risk_Score = NULLIF(LTRIM(RTRIM(REPLACE(Environment_Risk_Score, ',', ''))), '');
-
--- Repeat for Governance, Social, and Total scores
-UPDATE SP_500_ESG_Risk_Ratings
-SET Governance_Risk_Score = NULLIF(LTRIM(RTRIM(REPLACE(Governance_Risk_Score, ',', ''))), '');
-
-
-UPDATE SP_500_ESG_Risk_Ratings
-SET Social_Risk_Score = NULLIF(LTRIM(RTRIM(REPLACE(Social_Risk_Score, ',', ''))), '');
-
-
-UPDATE SP_500_ESG_Risk_Ratings
-SET Total_ESG_Risk_score = NULLIF(LTRIM(RTRIM(REPLACE(Total_ESG_Risk_score, ',', ''))), '');
-
-
-
-
-
-
 -- Industry-wide average ESG component scores
 SELECT
     Industry,
