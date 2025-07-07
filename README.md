@@ -161,7 +161,7 @@ FROM SP_500_ESG_Risk_Ratings;
 ![page](assets/Screenshot/GOV_N_TOT.png)
 
 ### Python Code
-Importing all the necessary library
+**Importing all the necessary library**
 ```python
 import pandas as pd
 import numpy as np
@@ -173,11 +173,12 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
-Importing the CSV data
+**Importing the CSV data**
+
 ```python
 df = pd.read_csv('SP 500 ESG Risk Ratings.csv')
 ```
-
+**Plotting histogram and boxplot of Each ESG score column**
 
 ```Python
 esg_cols = ['Total ESG Risk score', 'Environment Risk Score', 'Governance Risk Score', 'Social Risk Score']
@@ -206,6 +207,8 @@ for col in esg_cols:
 ![page](assets/Screenshot/second.png)
 ![page](assets/Screenshot/third.png)
 ![page](assets/Screenshot/fourth.png)
+
+**Plotting distribution of ESG components in a single diagram**
 
 ```Python
 colors = ["#6528F7", "#00DFA2", "#0079FF", "#EF2F88"]
@@ -282,6 +285,17 @@ plt.show()
 ![page](assets/Screenshot/nineth.png)
 
 ## Power BI Dashboard
+  **Overview Page**:  
+  ![Overview-page](assets/Screenshot/Overview.png)
+
+  **Inudstry Benchmark**:
+  
+  ![Environment-page](assets/Screenshot/Industry.png)
+
+  **Company Risk Profile**:
+   
+  ![Social-page](assets/Screenshot/Company.png)
+
 
  ** Dashboard:** [ESG-Risk-Analysis-Dashboard](https://app.powerbi.com/view?r=eyJrIjoiM2Y0MGVlM2ItNDJiZS00ZjViLWI3MzUtY2I2M2Q0YWNhMjljIiwidCI6ImRiOThlOTIzLWQyZWEtNDY2MS1hZDE1LTI3YzUyNjA2MGEyYiJ9)
 
